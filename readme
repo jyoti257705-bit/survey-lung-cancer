@@ -1,32 +1,102 @@
 # survey-lung-cancer
-Lung Cancer Survey Dataset
-Overview
-This dataset contains survey responses and medical-related information used to predict the presence of lung cancer (LUNG_CANCER column). It includes demographic information and several symptoms or risk factors.
 
-File Information
-File Name: survey lung cancer.csv
+README: Lung Cancer Prediction Project
+This project details the steps taken to analyze a lung cancer survey dataset, prepare it for machine learning, and train a Support Vector Classifier (SVC) model to predict the likelihood of lung cancer.
 
-Number of Records: 309
+1. Data Source and Initial Exploration
+The dataset, named survey lung cancer.csv, was loaded into a Pandas DataFrame (df).
+Dataset Dimensions:
 
-Number of Columns: 16
+Rows (Entries): 309 
+Columns (Features): 16 
+Data Types and Null Values:
+Most columns are of type int64.
+Two columns, 'GENDER' and 'LUNG_CANCER', are of type object.
+No missing (null) values were found in any column.
+Summary Statistics (for numerical columns):
+Mean Age: approximately 62.67 years 
+Min Age: 21 years 
+Max Age: 87 years 
+2. Target Variable Analysis
+The target variable for prediction is LUNG_CANCER.
 
-Column Descriptions
-Column Name	Data Type	Description	Key / Encoding
-GENDER	Categorical (Object)	The gender of the participant.	M / F
-AGE	Numerical (Integer)	The age of the participant in years.	
-SMOKING	Binary (Integer)	Smoking habit.	1: No, 2: Yes
-YELLOW_FINGERS	Binary (Integer)	Presence of yellow fingers.	1: No, 2: Yes
-ANXIETY	Binary (Integer)	Presence of anxiety.	1: No, 2: Yes
-PEER_PRESSURE	Binary (Integer)	Subjective feeling of peer pressure.	1: No, 2: Yes
-CHRONIC DISEASE	Binary (Integer)	Presence of a chronic disease.	1: No, 2: Yes
-FATIGUE	Binary (Integer)	Subjective feeling of fatigue.	1: No, 2: Yes
-ALLERGY	Binary (Integer)	Presence of allergies.	1: No, 2: Yes
-WHEEZING	Binary (Integer)	Presence of wheezing.	1: No, 2: Yes
-ALCOHOL CONSUMING	Binary (Integer)	Alcohol consumption habit.	1: No, 2: Yes
-COUGHING	Binary (Integer)	Presence of coughing.	1: No, 2: Yes
-SHORTNESS OF BREATH	Binary (Integer)	Presence of shortness of breath.	1: No, 2: Yes
-SWALLOWING DIFFICULTY	Binary (Integer)	Presence of swallowing difficulty.	1: No, 2: Yes
-CHEST PAIN	Binary (Integer)	Presence of chest pain.	1: No, 2: Yes
-LUNG_CANCER	Categorical (Object)	Target Variable: Diagnosis of lung cancer.	YES / NO
+Distribution of the Target Variable:
+The dataset is imbalanced, with a large majority of entries having a positive diagnosis:
+YES (Lung Cancer): 270 entries 
+NO (No Lung Cancer): 39 entries 
+This imbalance is visualized in a countplot and a bar plot.
+3. Feature Engineering and Preprocessing
+A. Feature Encoding
+The categorical features GENDER and LUNG_CANCER were converted to numerical representations using LabelEncoder from sklearn.preprocessing.
+
+B. Data Separation
+The data was split into features (X) and the target (y):
+
+X = All columns except LUNG_CANCER 
+y = LUNG_CANCER column 
+
+C. Train-Test Split
+The data was further split into training and testing sets:
+
+Test Size: 20% of the data (test_size=0.2) 
+
+Random State: 42 (random_state=42) for reproducibility 
+
+D. Feature Scaling
+The features (X) were scaled using StandardScaler from sklearn.preprocessing. This step standardizes features by removing the mean and scaling to unit variance, which is crucial for models like SVC.
+
+4. Model Training and Evaluation
+A Support Vector Classifier (SVC) model was chosen for the classification task.
+
+A. Training
+The model was trained using the scaled training data (x_train, y_train).
+
+B. Performance Metrics
+The model's performance was evaluated on both the training and testing sets:
+
+Training Accuracy: 94.74% 
+
+Testing Accuracy: 96.77% 
+
+C. Confusion Matrix and Classification Report
+
+Predicted	NO (0)	YES (1)
+Actual NO (0)	1	1
+Actual YES (1)	1	59
 
 Export to Sheets
+The confusion matrix on the test set was: [[1, 1], [1, 59]].
+
+Classification Report (for test set):
+
+Class	Precision	Recall	F1-Score	Support
+0 (NO)	
+0.50 
+0.50 
+0.50 
+2 
+1 (YES)	
+0.98 
+
+0.98 
+
+0.98 
+
+60 
+
+Accuracy				
+0.97 
+62 
+
+Macro Avg	
+0.74 
+0.74 
+0.74 
+62 
+
+Weighted Avg	
+0.97 
+0.97 
+0.97 
+62 
+
